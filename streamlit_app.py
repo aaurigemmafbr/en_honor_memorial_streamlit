@@ -27,7 +27,7 @@ def check_password():
 if check_password():
     st.set_page_config(page_title="EN Reference Builder", layout="centered")
 
-    st.title("📊 Engaging Networks Reference Field Builder")
+    st.title("Engaging Networks - Add Honor/Memorial Information to Transaction Report Reference")
 
     token = st.secrets["en_api"]["token"]
 
