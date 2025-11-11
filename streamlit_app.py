@@ -68,20 +68,24 @@ if check_password():
                             if "EN Transaction ID" not in user_df.columns or "EN Transaction ID" not in fim_df.columns:
                                 st.error("Both datasets must include an 'EN Transaction ID' column.")
                             else:
+                                # Convert both columns to string for consistent merge
+                                user_df["EN Transaction ID"] = user_df["EN Transaction ID"].astype(str).str.strip()
+                                fim_df["EN Transaction ID"] = fim_df["EN Transaction ID"].astype(str).str.strip()
+                            
                                 merged_df = pd.merge(
                                     user_df,
                                     fim_df[["EN Transaction ID", "Reference"]],
                                     on="EN Transaction ID",
                                     how="left"
                                 )
-
+                            
                                 st.success("✅ Reference column added successfully!")
                                 st.dataframe(merged_df.head(20))
-
+                            
                                 # Allow CSV download
                                 csv_bytes = merged_df.to_csv(index=False).encode("utf-8")
                                 download_name = "EN_Reference_Added.csv"
-
+                            
                                 st.download_button(
                                     label="📥 Download Final CSV",
                                     data=csv_bytes,
