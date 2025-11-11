@@ -35,7 +35,10 @@ if check_password():
 
     if uploaded_file:
         user_df = pd.read_csv(uploaded_file)
-
+        
+        # Drop any completely empty or unnamed columns
+        user_df = user_df.loc[:, ~user_df.columns.str.contains("^Unnamed")]
+        
         # Ensure 'Campaign Date' exists
         if "Campaign Date" not in user_df.columns:
             st.error("The uploaded CSV must include a 'Campaign Date' column.")
