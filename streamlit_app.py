@@ -87,8 +87,14 @@ if check_password():
                             
                                 # Allow CSV download
                                 csv_bytes = merged_df.to_csv(index=False).encode("utf-8")
-                                download_name = "EN_Reference_Added.csv"
-                            
+                                # Format detected date range for filename
+                                start_fmt = start_date.strftime("%m.%d.%Y")
+                                end_fmt = end_date.strftime("%m.%d.%Y")
+                                download_name = f"{start_fmt} to {end_fmt} EN Transactions with Tribute.csv"
+                                
+                                # Allow CSV download
+                                csv_bytes = merged_df.to_csv(index=False).encode("utf-8")
+                                
                                 st.download_button(
                                     label="📥 Download Final CSV",
                                     data=csv_bytes,
